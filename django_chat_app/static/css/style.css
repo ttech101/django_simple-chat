@@ -1,0 +1,13 @@
+.page-content {
+    padding: 100px 100px;
+}
+
+.color-gray {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.register {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
