@@ -5,40 +5,12 @@
     userLogin = '{{request.user.username}}';
     updateMessages()
 </script>
-<!-- {% if request.user.is_authenticated %} -->
 
 <h2 class="text-room">Room 1</h2>
 <div class="dfcc message-box">
     <div id="messageContainer" class="message-container">
-        <!--  {% for message in messages %}
-        {% if request.user.username == message.author.username %}
-        <div class="right-box">
-            <div class="right-box-text">
-                <div class="box-text-header">
-                    {{message.author.username}} <span class="color-gray"> {{ message.created_time.time}}
-                        [{{message.created_at}}]</span>:
-                </div>
-
-                <i>{{message.text}}</i>
-            </div>
-        </div>
-        {% else %}
-        <div class="left-box">
-            <div class="left-box-text">
-                <div class="box-text-header">
-                    {{message.author.username}} <span class="color-gray"> {{ message.created_time.time}}
-                        [{{message.created_at}}]</span>:
-                </div>
-
-                <i>{{message.text}}</i>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %} -->
-
     </div>
 </div>
-
 
 <div class="dfcc chat-input-box">
     <form onsubmit="sendMessage('{{ csrf_token }}', '{{request.user.username}}'); return false;" method="post"
@@ -53,11 +25,4 @@
         </button>
     </form>
 </div>
-
-
-<!-- {% else %}
-
-
-{% endif %} -->
-
 {% endblock %}

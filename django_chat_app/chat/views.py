@@ -50,14 +50,14 @@ def register(request):
     redirect = request.GET.get('next')
     print(request.method == 'POST')
     if request.method == 'POST' and request.POST.get('password1') == request.POST.get('password2'):
-        user = User.objects.create_user(username=request.POST.get('nickname'),first_name=request.POST.get('first_name'),last_name=request.POST.get('last_name'), email=request.POST.get('email'), password=request.POST.get('password'))
+        user = User.objects.create_user(username=request.POST.get('nickname'),first_name=request.POST.get('first_name'),last_name=request.POST.get('last_name'), email=request.POST.get('email'), password=request.POST.get('password1'))
         print(user)
         if user:
             login(request, user)
             if redirect:
                 return HttpResponseRedirect(request.POST.get('redirect'))
             else:
-                return HttpResponseRedirect('/chat/')
+                return HttpResponseRedirect('/chat1/')
     else:
         print('Passwort falsch')
     return  render(request, 'register/register.html')

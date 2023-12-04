@@ -6,7 +6,7 @@
         <h1>Login</h1>
 
         {% if wrongPassword %}
-        <p>Benutzername oder Passwort ist falsch!</p>
+        <p>Username or password is incorrect!</p>
         {% endif %}
 
         <form class="mdl-grid" method="POST" action="/login/">
@@ -16,14 +16,14 @@
             <div class="mdl-cell mdl-cell--12-col center">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
                     <input class="mdl-textfield__input" type="text" name="username" id="username">
-                    <label class="mdl-textfield__label" for="username">Benutzername</label>
+                    <label class="mdl-textfield__label" for="username">User name</label>
                 </div>
             </div>
 
             <div class="mdl-cell mdl-cell--12-col center">
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                     <input class="mdl-textfield__input" type="password" name="password" id="password">
-                    <label class="mdl-textfield__label" for="password">Passwort</label>
+                    <label class="mdl-textfield__label" for="password">Password</label>
                 </div>
             </div>
 
@@ -34,18 +34,24 @@
             </div>
         </form>
         <div class="center">
-            <p>Neu hier? Erstelle dir hier einen Account um den Chat beizutretten.</p>
-            Bitte klicke <a href="/register/">hier</a>
+            <p>New here? Create an account here to join the chat.</p>
+            Please click <a href="/register/">here</a>
         </div>
     </div>
     <div>
         <h1>Guest login</h1>
-        <p>Gerne kannst du auch als Gast beitretten.</p>
-        <div class="mdl-cell mdl-cell--12-col center">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                Guest
-            </button>
-        </div>
+        <p>You are also welcome to join as a guest.</p>
+        <form class="mdl-grid" method="POST" action="/login/">
+            {% csrf_token %}
+            <input type="hidden" name="redirect" value="{{ redirect }}">
+            <input type="hidden" name="username" value="guest">
+            <input type="hidden" name="password" value="123456">
+            <div class="mdl-cell mdl-cell--12-col center">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    Guest
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}
