@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script>
+    userLogin = '{{request.user.username}}';
+    updateMessages()
+</script>
+<!-- {% if request.user.is_authenticated %} -->
+
+<h2 class="text-room">Room 1</h2>
+<div class="dfcc message-box">
+    <div id="messageContainer" class="message-container">
+        <!--  {% for message in messages %}
+        {% if request.user.username == message.author.username %}
+        <div class="right-box">
+            <div class="right-box-text">
+                <div class="box-text-header">
+                    {{message.author.username}} <span class="color-gray"> {{ message.created_time.time}}
+                        [{{message.created_at}}]</span>:
+                </div>
+
+                <i>{{message.text}}</i>
+            </div>
+        </div>
+        {% else %}
+        <div class="left-box">
+            <div class="left-box-text">
+                <div class="box-text-header">
+                    {{message.author.username}} <span class="color-gray"> {{ message.created_time.time}}
+                        [{{message.created_at}}]</span>:
+                </div>
+
+                <i>{{message.text}}</i>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %} -->
+
+    </div>
+</div>
+
+
+<div class="dfcc chat-input-box">
+    <form onsubmit="sendMessage('{{ csrf_token }}', '{{request.user.username}}'); return false;" method="post"
+        class="send-style">
+        {% csrf_token %}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
+            <label class="mdl-textfield__label" for="messagefield">Nachricht...</label>
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Send
+        </button>
+    </form>
+</div>
+
+
+<!-- {% else %}
+
+
+{% endif %} -->
+
+{% endblock %}

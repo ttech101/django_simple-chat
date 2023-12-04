@@ -18,11 +18,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from chat.views import index, login_view, register
+from chat.views import chat, imprint, landingPage, login_view, logout_view, register, update_messages
 
 urlpatterns = [
+    path('', landingPage),
     path('admin/', admin.site.urls),
-    path('chat/', index),
+    path('chat1/', chat),
+    path('chat2/', chat),
+    path('chat3/', chat),
+    path('chat4/', chat),
     path('login/', login_view),
+    path('imprint/', imprint),
+    path('logout/', logout_view),
     path('register/', register),
+    path('update_messages/', update_messages, name='update-messages'),
 ]

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script>
+    userLogin = '{{request.user.username}}';
+    updateMessages()
+</script>
+<h2 class="text-room">Room 3</h2>
+
+<div class="dfcc message-box">
+    <div id="messageContainer" class="message-container">
+    </div>
+</div>
+
+<div class="dfcc chat-input-box">
+    <form onsubmit="sendMessage('{{ csrf_token }}', '{{request.user.username}}'); return false;" method="post"
+        class="send-style">
+        {% csrf_token %}
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" name="textmessage" type="text" id="messagefield">
+            <label class="mdl-textfield__label" for="messagefield">Nachricht...</label>
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Send
+        </button>
+    </form>
+</div>
+
+{% endblock %}
