@@ -16,6 +16,14 @@ from django.contrib.sessions.models import Session
 
 
 def chat(request):
+    """_summary_
+
+    Args:
+        request (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     chatId = request.get_full_path()[-2]
     logged_in_users = get_currently_logged_in_users()
     if request.method == 'POST':
@@ -90,6 +98,11 @@ def logout_view(request):
 
 
 def get_currently_logged_in_users():
+    """_summary_
+
+    Returns:
+        _type_: _description_
+    """
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
     logged_in_users = []
     for session in active_sessions:

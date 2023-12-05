@@ -2,6 +2,20 @@ main {
   height: 100vh;
 }
 
+main::-webkit-scrollbar {
+  width: 16px;
+}
+
+main::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+main::-webkit-scrollbar-thumb {
+  background-color: #6c757d;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
+
 .page-content {
   padding: 50px 50px;
   position: relative;
@@ -36,6 +50,18 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dfccc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dfc {
+  display: flex;
+  justify-content: center;
 }
 
 .message-container {
@@ -181,25 +207,6 @@ main {
 .text-room {
   margin-top: 0;
   text-align: center;
-}
-
-.imprint {
-  overflow-y: scroll;
-  height: calc(100vh - 150px);
-}
-
-.imprint::-webkit-scrollbar {
-  width: 16px;
-}
-
-.imprint::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-
-.imprint::-webkit-scrollbar-thumb {
-  background-color: #6c757d;
-  border-radius: 10px;
-  border: 3px solid #ffffff;
 }
 
 @media (min-width: 600px) {
