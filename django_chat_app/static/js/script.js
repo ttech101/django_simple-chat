@@ -83,50 +83,42 @@ function formatDate(date) {
  */
 
 function updateMessages() {
-  let dataToSend = checkUserLogin(userLogin);
-  fetch("/update_messages/" + "?" + new URLSearchParams(dataToSend), {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (JSON.stringify(data) !== JSON.stringify(currentMessages)) {
-        currentMessages = data;
-        messageContainer.innerHTML = "";
-        data.forEach((message) => {
-          let date = formatDate(message.created_at);
-          if (userLogin == message.author) {
-            createTemplateRightBox(
-              date,
-              message.created_time,
-              message.author,
-              message.text
-            );
-          } else {
-            createTemplateLeftBox(
-              date,
-              message.created_time,
-              message.author,
-              message.text
-            );
-          }
-        });
-        scrollDown();
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
-/**
- * This function checks whether the user is logged in
- */
-
-function checkUserLogin(userLogin) {
   if (userLogin != undefined) {
-    return {
+    var dataToSend = {
       key1: window.location,
     };
+    fetch("/update_messages/" + "?" + new URLSearchParams(dataToSend), {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (JSON.stringify(data) !== JSON.stringify(currentMessages)) {
+          currentMessages = data;
+          messageContainer.innerHTML = "";
+          data.forEach((message) => {
+            let date = formatDate(message.created_at);
+            if (userLogin == message.author) {
+              createTemplateRightBox(
+                date,
+                message.created_time,
+                message.author,
+                message.text
+              );
+            } else {
+              createTemplateLeftBox(
+                date,
+                message.created_time,
+                message.author,
+                message.text
+              );
+            }
+          });
+          scrollDown();
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 }
 
