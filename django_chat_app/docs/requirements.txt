@@ -1,0 +1,1 @@
+Sphinx v7.2.6 in Verwendung

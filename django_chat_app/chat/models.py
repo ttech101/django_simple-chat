@@ -6,10 +6,19 @@ from django.db import models
 
 # Create your models here.
 
+
 class Chat(models.Model):
+    """
+    The chat model is created here
+
+    """
     created_add = models.DateField(default=date.today)
 
+
 class Message(models.Model):
+    """
+    The message model is created here
+    """
     text = models.CharField(max_length=500)
     created_at = models.DateField(default=date.today)
     created_time = models.DateTimeField(default=datetime.now)

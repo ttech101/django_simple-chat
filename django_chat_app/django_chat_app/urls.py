@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from chat.views import chat, imprint, landingPage, login_view, logout_view, register, update_messages
+from chat.views import chat, imprint, landingPage, login_view, logout_view, register, sphinx_doc, update_messages
 
 urlpatterns = [
     path('', landingPage),
@@ -31,5 +31,6 @@ urlpatterns = [
     path('imprint/', imprint),
     path('logout/', logout_view),
     path('register/', register),
-    path('update_messages/', update_messages, name='update-messages'),
+    path('doc/', sphinx_doc),
+    path('update_messages/', update_messages)
 ]

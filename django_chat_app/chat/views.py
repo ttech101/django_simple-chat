@@ -1,7 +1,7 @@
-import json
+import os
 from django.utils import timezone
-from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
+from django.http import Http404, HttpResponseRedirect, JsonResponse
+from django.shortcuts import redirect, render
 from .models import Chat, Message
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -16,16 +16,11 @@ from django.contrib.sessions.models import Session
 
 
 def chat(request):
-    """_summary_
-
-    Args:
-        request (_type_): _description_
-
-    Returns:
-        _type_: _description_
+    """
+    This view returns the individual chat rooms as well as the new posts if they exist.
     """
     chatId = request.get_full_path()[-2]
-    logged_in_users = get_currently_logged_in_users()
+    logged_in_users = getCurrentlyLoggedUsers()
     if request.method == 'POST':
         myChat = Chat.objects.get(id=chatId)
         new_message = Message.objects.create(text=request.POST['textmessage'], chat=myChat, author=request.user, receiver=request.user)
@@ -35,8 +30,10 @@ def chat(request):
     return render(request, 'chat/chat'+chatId+'.html',{'messages': chatMessages,'logged_in_users': logged_in_users})
 
 
-
 def login_view(request):
+    """
+    This view controls the user's login and directs him to room 1 if necessary
+    """
     redirect = request.GET.get('next')
     if request.method == 'POST':
         redirect = request.POST.get('redirect')
@@ -55,6 +52,9 @@ def login_view(request):
     return render(request, 'auth/login.html', {'redirect': redirect})
 
 def register(request):
+    """
+    In this view, the registration of the users is processed and, if the registration is successful, they are forwarded to the respective chat room
+    """
     redirect = request.GET.get('next')
     print(request.method == 'POST')
     if request.method == 'POST' and request.POST.get('password1') == request.POST.get('password2'):
@@ -72,6 +72,9 @@ def register(request):
 
 
 def update_messages(request):
+    """
+    This view function updates the new messages in the respective chat rooms
+    """
     chatId = viewDetermine(request)
     my_chat = Chat.objects.get(id=chatId)
     messages = Message.objects.filter(chat=my_chat).select_related('author')  # Verwende select_related, um den "author" aufzulösen
@@ -88,20 +91,24 @@ def update_messages(request):
     return JsonResponse(serialized_messages, safe=False)
 
 def landingPage(request):
-    logged_in_users = get_currently_logged_in_users()
+    """
+    This view of the landing page returns the logged in users in the menu
+    """
+    logged_in_users = getCurrentlyLoggedUsers()
     return render(request, 'landing/landingpage.html',{'logged_in_users': logged_in_users})
 
 
 def logout_view(request):
+    """
+    This function controls the logout process
+    """
     logout(request)
     return render(request, 'landing/landingpage.html')
 
 
-def get_currently_logged_in_users():
-    """_summary_
-
-    Returns:
-        _type_: _description_
+def getCurrentlyLoggedUsers():
+    """
+    This function in view returns the current user
     """
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
     logged_in_users = []
@@ -114,9 +121,28 @@ def get_currently_logged_in_users():
     return (logged_in_users)
 
 def viewDetermine(request):
-    #print('check hier',request.GET.get('key1')[-2])
+    """
+    This function returns the current chat room
+    """
     return request.GET.get('key1')[-2]
 
 def imprint(request):
-    logged_in_users = get_currently_logged_in_users()
+    """
+    This view renders the imprint part
+    """
+    logged_in_users = getCurrentlyLoggedUsers()
     return render(request, 'imprint/imprint.html',{'logged_in_users': logged_in_users})
+
+
+
+def sphinx_doc(request):
+    # Passe den Pfad zu deinem Dokumentationsverzeichnis an
+    doc_directory = './docs/_build/singlehtml/'
+
+    # Lese den Inhalt der index.html-Datei ein
+    with open(os.path.join(doc_directory, 'index.html'), 'r', encoding='utf-8') as f:
+        doc_content = f.read()
+
+    # Gib den HTML-Inhalt in der Django-View aus
+    return render(request, 'imprint/doc.html', {'doc': doc_content})
+
