@@ -18,10 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from chat.views import chat, imprint, landingPage, login_view, logout_view, register, sphinx_doc, update_messages
+from chat.views import chat, imprint, landing_page, login_view, logout_view, register, update_messages
 
 urlpatterns = [
-    path('', landingPage),
+    path('', landing_page),
     path('admin/', admin.site.urls),
     path('chat1/', chat),
     path('chat2/', chat),
@@ -31,6 +31,5 @@ urlpatterns = [
     path('imprint/', imprint),
     path('logout/', logout_view),
     path('register/', register),
-    path('doc/', sphinx_doc),
     path('update_messages/', update_messages)
 ]

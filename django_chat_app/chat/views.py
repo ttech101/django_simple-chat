@@ -20,7 +20,7 @@ def chat(request):
     This view returns the individual chat rooms as well as the new posts if they exist.
     """
     chatId = request.get_full_path()[-2]
-    logged_in_users = getCurrentlyLoggedUsers()
+    logged_in_users = get_currently_logged_users()
     if request.method == 'POST':
         myChat = Chat.objects.get(id=chatId)
         new_message = Message.objects.create(text=request.POST['textmessage'], chat=myChat, author=request.user, receiver=request.user)
@@ -75,7 +75,7 @@ def update_messages(request):
     """
     This view function updates the new messages in the respective chat rooms
     """
-    chatId = viewDetermine(request)
+    chatId = view_determine(request)
     my_chat = Chat.objects.get(id=chatId)
     messages = Message.objects.filter(chat=my_chat).select_related('author')  # Verwende select_related, um den "author" aufzulösen
     # Extrahiere benutzerdefinierte Daten für die Serialisierung
@@ -90,11 +90,11 @@ def update_messages(request):
         serialized_messages.append(serialized_message)
     return JsonResponse(serialized_messages, safe=False)
 
-def landingPage(request):
+def landing_page(request):
     """
     This view of the landing page returns the logged in users in the menu
     """
-    logged_in_users = getCurrentlyLoggedUsers()
+    logged_in_users = get_currently_logged_users()
     return render(request, 'landing/landingpage.html',{'logged_in_users': logged_in_users})
 
 
@@ -106,7 +106,7 @@ def logout_view(request):
     return render(request, 'landing/landingpage.html')
 
 
-def getCurrentlyLoggedUsers():
+def get_currently_logged_users():
     """
     This function in view returns the current user
     """
@@ -120,7 +120,7 @@ def getCurrentlyLoggedUsers():
             logged_in_users.append(logged_in_user)
     return (logged_in_users)
 
-def viewDetermine(request):
+def view_determine(request):
     """
     This function returns the current chat room
     """
@@ -130,19 +130,8 @@ def imprint(request):
     """
     This view renders the imprint part
     """
-    logged_in_users = getCurrentlyLoggedUsers()
+    logged_in_users = get_currently_logged_users()
     return render(request, 'imprint/imprint.html',{'logged_in_users': logged_in_users})
 
 
-
-def sphinx_doc(request):
-    # Passe den Pfad zu deinem Dokumentationsverzeichnis an
-    doc_directory = './docs/_build/singlehtml/'
-
-    # Lese den Inhalt der index.html-Datei ein
-    with open(os.path.join(doc_directory, 'index.html'), 'r', encoding='utf-8') as f:
-        doc_content = f.read()
-
-    # Gib den HTML-Inhalt in der Django-View aus
-    return render(request, 'imprint/doc.html', {'doc': doc_content})
 
