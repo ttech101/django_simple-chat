@@ -27,10 +27,10 @@
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
                     <!-- Title -->
-                    <span class="mdl-layout-title">
+                    <span class="mdl-layout-title welcome-header">
                         <a href="/"><img class="logo" src="../static/img/logo.png" alt=""></a>
                         {% if request.user.is_authenticated %}
-                        Welcome, {{request.user.username}}!
+                        Welcome, {{request.user.username}}
                         {% else %}
                         Welcome! Please log in or join as a guest
                         {% endif %}
@@ -52,6 +52,13 @@
                 <span style="border-bottom: 1px solid black;" class="mdl-layout-title pl-5"><a href="/"
                         style="text-decoration: none; color: black">Simple Chat</a>
                 </span>
+                <span class="mdl-layout-title welcome-menu">
+                    {% if request.user.is_authenticated %}
+                    Welcome, {{request.user.username}}
+                    {% else %}
+                    Welcome! Please log in or join as a guest
+                    {% endif %}
+                </span>
                 <nav class="mdl-navigation">
                     {% if request.user.is_authenticated %}
                     <h5 class="pl-5">Chat rooms</h5>
@@ -59,6 +66,7 @@
                     <a class="mdl-navigation__link" href="../chat2">Chat room 2</a>
                     <a class="mdl-navigation__link" href="../chat3">Chat room 3</a>
                     <a class="mdl-navigation__link" href="../chat4">Chat room 4</a>
+                    <a class="mdl-navigation__link" href="../logout">Logout</a>
                     <h5 class="pl-5">User online</h5>
                     {% for user in logged_in_users %}
                     <li class="pl-10">{{ user.username }}</li>
@@ -67,6 +75,7 @@
                     <a class="mdl-navigation__link" href="../login">Login</a>
                     <a class="mdl-navigation__link" href="../register">New Account</a>
                     {% endif %}
+
                     <a class="mdl-navigation__link"
                         style="position: absolute; bottom: 0;  width: -webkit-fill-available;" href="../imprint">Legal
                         Notice</a>
